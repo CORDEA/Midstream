@@ -34,6 +34,7 @@ android {
         prod {
             dimension "api"
             buildConfigField "String", "SCRIPT_ID", "${keys.scriptId}"
+            buildConfigField "String", "SHEET_ID", "${keys.sheetId}"
         }
     }
 }
