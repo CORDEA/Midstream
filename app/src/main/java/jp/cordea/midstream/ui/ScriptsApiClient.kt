@@ -7,10 +7,12 @@ import com.google.api.client.json.jackson2.JacksonFactory
 import com.google.api.services.script.Script
 import com.google.api.services.script.model.ExecutionRequest
 import io.reactivex.Single
+import jp.cordea.midstream.BuildConfig
 
 class ScriptsApiClient(credential: GoogleAccountCredential) {
     companion object {
-        private const val ID = ""
+        private const val GET = "get"
+        private const val APPEND = "append"
     }
 
     private val service = Script.Builder(
@@ -26,7 +28,7 @@ class ScriptsApiClient(credential: GoogleAccountCredential) {
     private fun request(): Single<Map<String, String>> {
         val request = ExecutionRequest().setFunction("")
         return Single.create<Map<String, String>> { emitter ->
-            val op = service.scripts().run(ID, request).execute()
+            val op = service.scripts().run(BuildConfig.SCRIPT_ID, request).execute()
             if (op.error != null) {
                 emitter.onError(IllegalStateException(op.error.message))
                 return@create

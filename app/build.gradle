@@ -6,6 +6,12 @@ apply plugin: 'kotlin-android-extensions'
 
 apply plugin: 'kotlin-kapt'
 
+def loadKeys() {
+    def props = new Properties()
+    file("key.properties").withInputStream { props.load(it) }
+    return props
+}
+
 android {
     compileSdkVersion 'android-P'
     defaultConfig {
@@ -19,6 +25,15 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    def keys = loadKeys()
+    flavorDimensions "api"
+    productFlavors {
+        prod {
+            dimension "api"
+            buildConfigField "String", "SCRIPT_ID", "${keys.scriptId}"
         }
     }
 }
