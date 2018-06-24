@@ -5,14 +5,16 @@ import android.accounts.AccountManager
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential
-import com.google.api.client.util.ExponentialBackOff
+import jp.cordea.midstream.CredentialProvider
 import pub.devrel.easypermissions.AfterPermissionGranted
 import pub.devrel.easypermissions.EasyPermissions
+import javax.inject.Inject
 
-class Authenticator(private val context: Context) : EasyPermissions.PermissionCallbacks {
+class Authenticator @Inject constructor(
+        provider: CredentialProvider,
+        private val context: Context
+) : EasyPermissions.PermissionCallbacks {
     companion object {
-        private val SCOPES = listOf("https://www.googleapis.com/auth/script.projects")
         private const val REQUEST_PERMISSION_GET_ACCOUNTS = 1
         private const val REQUEST_ACCOUNT_PICKER = 2
     }
@@ -23,9 +25,8 @@ class Authenticator(private val context: Context) : EasyPermissions.PermissionCa
         fun requestGetAccountsPermission(requestCode: Int)
     }
 
+    private val credential = provider.get()
     private val keyManager = KeyManager(context)
-    private val credential = GoogleAccountCredential.usingOAuth2(context, SCOPES)
-            .setBackOff(ExponentialBackOff())
 
     lateinit var callbacks: AuthenticatorCallbacks
 
