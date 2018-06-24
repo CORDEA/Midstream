@@ -1,6 +1,7 @@
 package jp.cordea.midstream.ui.login
 
 import android.Manifest
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,8 +10,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation
+import dagger.android.support.AndroidSupportInjection
 import jp.cordea.midstream.R
 import pub.devrel.easypermissions.EasyPermissions
+import javax.inject.Inject
 
 class LoginFragment : Fragment(), Authenticator.AuthenticatorCallbacks {
 
@@ -18,11 +21,13 @@ class LoginFragment : Fragment(), Authenticator.AuthenticatorCallbacks {
         fun newInstance() = LoginFragment()
     }
 
+    @Inject
+    lateinit var authenticator: Authenticator
     private lateinit var viewModel: LoginViewModel
-    private val authenticator by lazy {
-        Authenticator(context!!).also {
-            it.callbacks = this
-        }
+
+    override fun onAttach(context: Context?) {
+        AndroidSupportInjection.inject(this)
+        super.onAttach(context)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
