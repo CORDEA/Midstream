@@ -12,7 +12,8 @@ import javax.inject.Inject
 
 class Authenticator @Inject constructor(
         provider: CredentialProvider,
-        private val context: Context
+        private val context: Context,
+        private val callbacks: AuthenticatorCallbacks
 ) : EasyPermissions.PermissionCallbacks {
     companion object {
         private const val REQUEST_PERMISSION_GET_ACCOUNTS = 1
@@ -27,8 +28,6 @@ class Authenticator @Inject constructor(
 
     private val credential = provider.get()
     private val keyManager = KeyManager(context)
-
-    lateinit var callbacks: AuthenticatorCallbacks
 
     fun authIfNeeded() {
         if (credential.selectedAccountName == null) {
