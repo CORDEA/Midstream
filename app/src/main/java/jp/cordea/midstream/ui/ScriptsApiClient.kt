@@ -24,9 +24,13 @@ class ScriptsApiClient(credential: GoogleAccountCredential) {
             })
             .build()
 
+    fun get() = request(GET, BuildConfig.SHEET_ID)
+
+    fun append(vararg args: Any) = request(APPEND, BuildConfig.SHEET_ID, args.toList())
+
     @Suppress("UNCHECKED_CAST")
-    private fun request(): Single<Map<String, String>> {
-        val request = ExecutionRequest().setFunction("")
+    private fun request(name: String, vararg args: Any): Single<Map<String, String>> {
+        val request = ExecutionRequest().setFunction(name).setParameters(args.toList())
         return Single.create<Map<String, String>> { emitter ->
             val op = service.scripts().run(BuildConfig.SCRIPT_ID, request).execute()
             if (op.error != null) {
