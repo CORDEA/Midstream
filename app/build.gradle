@@ -37,6 +37,10 @@ dependencies {
     implementation('com.google.apis:google-api-services-script:v1-rev212-1.23.0') {
         exclude group: 'org.apache.httpcomponents'
     }
+    implementation 'io.reactivex.rxjava2:rxjava:2.1.12'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
+    implementation 'io.reactivex.rxjava2:rxkotlin:2.2.0'
+    implementation 'com.squareup.moshi:moshi-kotlin:1.5.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
