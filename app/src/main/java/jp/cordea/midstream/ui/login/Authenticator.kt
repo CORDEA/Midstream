@@ -46,6 +46,7 @@ class Authenticator @Inject constructor(
                 )
             } else {
                 credential.selectedAccountName = name
+                callbacks.requestStartMainActivity()
             }
             return
         }
