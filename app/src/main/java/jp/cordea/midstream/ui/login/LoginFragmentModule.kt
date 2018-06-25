@@ -1,5 +1,6 @@
 package jp.cordea.midstream.ui.login
 
+import androidx.lifecycle.ViewModelStoreOwner
 import dagger.Binds
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
@@ -18,6 +19,9 @@ interface LoginFragmentModule {
 interface LoginFragmentBindModule {
     @Binds
     fun bindAuthenticatorCallbacks(fragment: LoginFragment): Authenticator.AuthenticatorCallbacks
+
+    @Binds
+    fun bindViewModelStoreOwner(fragment: LoginFragment): ViewModelStoreOwner
 }
 
 @Module
