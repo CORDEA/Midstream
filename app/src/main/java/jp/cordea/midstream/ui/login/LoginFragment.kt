@@ -8,7 +8,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation
 import dagger.android.support.AndroidSupportInjection
 import jp.cordea.midstream.R
@@ -23,7 +22,8 @@ class LoginFragment : Fragment(), Authenticator.AuthenticatorCallbacks {
 
     @Inject
     lateinit var authenticator: Authenticator
-    private lateinit var viewModel: LoginViewModel
+    @Inject
+    lateinit var viewModel: LoginViewModel
 
     override fun onAttach(context: Context?) {
         AndroidSupportInjection.inject(this)
@@ -37,7 +37,6 @@ class LoginFragment : Fragment(), Authenticator.AuthenticatorCallbacks {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(LoginViewModel::class.java)
         authenticator.authIfNeeded()
     }
 
