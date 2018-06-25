@@ -1,15 +1,18 @@
 package jp.cordea.midstream.ui
 
 import com.google.api.client.extensions.android.http.AndroidHttp
-import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential
 import com.google.api.client.http.HttpRequestInitializer
 import com.google.api.client.json.jackson2.JacksonFactory
 import com.google.api.services.script.Script
 import com.google.api.services.script.model.ExecutionRequest
 import io.reactivex.Single
 import jp.cordea.midstream.BuildConfig
+import jp.cordea.midstream.CredentialProvider
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class ScriptsApiClient(credential: GoogleAccountCredential) {
+@Singleton
+class ScriptsApiClient @Inject constructor(provider: CredentialProvider) {
     companion object {
         private const val GET = "get"
         private const val APPEND = "append"
@@ -19,7 +22,7 @@ class ScriptsApiClient(credential: GoogleAccountCredential) {
             AndroidHttp.newCompatibleTransport(),
             JacksonFactory.getDefaultInstance(),
             HttpRequestInitializer {
-                credential.initialize(it)
+                provider.get().initialize(it)
                 it.readTimeout = 380000
             })
             .build()
