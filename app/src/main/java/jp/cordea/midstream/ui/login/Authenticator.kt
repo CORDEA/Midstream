@@ -66,6 +66,7 @@ class Authenticator @Inject constructor(
         }
         keyManager.accountName = name
         credential.selectedAccountName = name
+        callbacks.requestStartMainActivity()
     }
 
     override fun onRequestPermissionsResult(
@@ -82,7 +83,6 @@ class Authenticator @Inject constructor(
     }
 
     override fun onPermissionsGranted(requestCode: Int, perms: MutableList<String>?) {
-        callbacks.requestStartMainActivity()
     }
 
     override fun onPermissionsDenied(requestCode: Int, perms: MutableList<String>?) {
