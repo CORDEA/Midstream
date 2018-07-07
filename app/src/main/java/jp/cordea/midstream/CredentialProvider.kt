@@ -9,7 +9,7 @@ import javax.inject.Singleton
 @Singleton
 class CredentialProvider @Inject constructor(context: Context) {
     companion object {
-        private val SCOPES = listOf("https://www.googleapis.com/auth/script.projects")
+        private val SCOPES = listOf("https://www.googleapis.com/auth/spreadsheets")
     }
 
     private val credential = GoogleAccountCredential.usingOAuth2(context, SCOPES)
