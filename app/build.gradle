@@ -29,6 +29,9 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    dataBinding {
+        enabled = true
+    }
 
     def keys = loadKeys()
     flavorDimensions "api"
@@ -50,6 +53,7 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:1.1.2'
     implementation 'android.arch.lifecycle:extensions:1.1.1'
     implementation 'android.arch.navigation:navigation-fragment:1.0.0-alpha02'
+    kapt "com.android.databinding:compiler:3.1.3"
     implementation 'com.google.android.gms:play-services-auth:15.0.1'
     implementation 'pub.devrel:easypermissions:0.3.0'
     implementation('com.google.api-client:google-api-client-android:1.23.0') {
