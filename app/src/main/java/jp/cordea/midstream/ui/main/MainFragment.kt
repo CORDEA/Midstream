@@ -41,7 +41,9 @@ class MainFragment : Fragment() {
             inflater: LayoutInflater,
             container: ViewGroup?,
             savedInstanceState: Bundle?
-    ): View = MainFragmentBinding.inflate(inflater, container, false).root
+    ): View = MainFragmentBinding.inflate(inflater, container, false).apply {
+        recyclerView.adapter = adapter
+    }.root
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
