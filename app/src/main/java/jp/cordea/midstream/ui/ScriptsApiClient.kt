@@ -13,6 +13,7 @@ import jp.cordea.midstream.CredentialProvider
 import kotlinx.serialization.internal.StringSerializer
 import kotlinx.serialization.json.JSON
 import kotlinx.serialization.list
+import java.math.BigDecimal
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -33,12 +34,12 @@ class ScriptsApiClient @Inject constructor(provider: CredentialProvider) {
             .build()
 
     @Suppress("UNCHECKED_CAST")
-    fun get(): Single<List<List<String>>> {
+    fun get(): Single<List<List<BigDecimal>>> {
         val request = ExecutionRequest()
                 .setFunction(GET)
                 .setParameters(listOf(BuildConfig.SHEET_ID))
         return Single
-                .create<List<List<String>>> { emitter ->
+                .create<List<List<BigDecimal>>> { emitter ->
                     val op = service.scripts().run(BuildConfig.SCRIPT_ID, request).execute()
                     if (op.error != null) {
                         emitter.onError(IllegalStateException(op.error.message))
@@ -46,7 +47,7 @@ class ScriptsApiClient @Inject constructor(provider: CredentialProvider) {
                     }
                     val result = op.response?.get("result")
                     if (result != null) {
-                        emitter.onSuccess(result as List<List<String>>)
+                        emitter.onSuccess(result as List<List<BigDecimal>>)
                         return@create
                     }
                     emitter.onError(IllegalStateException())
