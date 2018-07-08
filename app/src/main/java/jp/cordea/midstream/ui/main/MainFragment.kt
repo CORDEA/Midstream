@@ -51,6 +51,11 @@ class MainFragment : Fragment() {
                 .observe(this, Observer {
                     when (it) {
                         is MainListState.BusDataChanged -> {
+                            adapter.addAll(it.data.map {
+                                listItem.get().apply {
+                                    model = MainListItemModel(it)
+                                }
+                            })
                         }
                         is MainListState.AuthRequired -> {
                             startActivityForResult(
